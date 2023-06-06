@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import { useHistory } from 'react-router-dom';
 
 const RegistrationForm = () => {
     const [username, setUsername] = useState('');
@@ -10,7 +10,7 @@ const RegistrationForm = () => {
     const [password2, setPassword2] = useState('');
     const [error, setError] = useState('');
 
-
+    const history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,9 +24,9 @@ const RegistrationForm = () => {
     
     };
 
-    axios.post('http://localhost:8000/api/v1/accounts/registration/', data)
+    axios.post('http://localhost:8000/account/registration/', data)
         .then(response => {
-         
+            history.push('/');
         })
         .catch(error => {
             if (error.response && error.response.data && error.response.data.error) {
@@ -35,6 +35,9 @@ const RegistrationForm = () => {
                 setError('An error occurred during registration.');
             }
         });
+};
+const handleGoHome = () => {
+    history.push('/'); // Go to home page
 };
 
     return (
@@ -70,6 +73,7 @@ const RegistrationForm = () => {
                 />
                 <button type="submit">Register</button>
             </form>
+            <button onClick={handleGoHome}>Go Back Home</button> {/* Add a button to go back home */}
         </div>
     );
 };

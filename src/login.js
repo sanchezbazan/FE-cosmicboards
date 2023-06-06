@@ -12,29 +12,35 @@ const Login = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/accounts/login/', {
+      const response = await axios.post('http://localhost:8000/account/login/', {
         username,
         password,
       });
 
-      // The response will contain the token that you can save to the localStorage or 
-      // any other place you'd like to keep for further authenticated requests.
       localStorage.setItem('token', response.data.key);
-      // Depending on your backend implementation, you might receive the user id in response.data
-      // Assuming that's the case, you can store it in local storage for future use
-      // localStorage.setItem('userId', response.data.userId);
+
       alert('Login successful!');
       
       // After successful login, you can navigate to the UserDetail page
       // replace 'userId' with the actual user id from the login response
-      history.push(`/api/v1/users/portal`);
+      history.push(`/account/overview`);
     } catch (error) {
       console.error("An error occurred during login.", error);
       alert('An error occurred. Please check your credentials and try again.');
     }
   };
 
+  const handleGoHome = () => {
+    history.push('/'); // Go to home page
+};
+
+const handleGoToPasswordReset = () => {
+  history.push('/account/password/reset'); // Go to PasswordReset page
+};
+
+
   return (
+    <div>
     <form onSubmit={handleSubmit}>
       <label>
         Username:
@@ -46,6 +52,10 @@ const Login = () => {
       </label>
       <button type="submit">Login</button>
     </form>
+    <button onClick={handleGoHome}>Go Back Home</button> {/* Add a button to go back home */}
+    <button onClick={handleGoToPasswordReset}>Reset Password</button> {/* Add a button to go to PasswordReset page */}
+    </div>
+    
   );
 };
 
