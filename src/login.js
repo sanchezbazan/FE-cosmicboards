@@ -14,6 +14,7 @@ const Login = () => {
     try {
       const response = await axios.post('http://localhost:8000/account/login/', {
         username,
+
         password,
       });
 
@@ -23,7 +24,7 @@ const Login = () => {
       
       // After successful login, you can navigate to the UserDetail page
       // replace 'userId' with the actual user id from the login response
-      history.push(`/account/overview`);
+      history.push(`/portal/overview`);
     } catch (error) {
       console.error("An error occurred during login.", error);
       alert('An error occurred. Please check your credentials and try again.');

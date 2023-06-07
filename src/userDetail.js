@@ -18,7 +18,7 @@ const UserDetail = () => {
       };
 
       try {
-        const response = await axios.get('http://localhost:8000/account/overview/', { headers });
+        const response = await axios.get(`http://localhost:8000/portal/overview/`,{ headers });
         setUser(response.data[0]);
         setEditedUser(response.data[0]);
       } catch (error) {
@@ -45,7 +45,7 @@ const UserDetail = () => {
       'Authorization': `Token ${token}`
     };
     try {
-      const response = await axios.patch(`http://localhost:8000/account/overview/${user.id}/`, editedUser, { headers });
+      const response = await axios.patch(`http://localhost:8000/portal/overview/${user.id}/`, editedUser, { headers });
       setUser(response.data);
       setEditing(false);
     } catch (error) {
@@ -72,8 +72,7 @@ const UserDetail = () => {
   };
   
   if (!user) {
-    history.push("/account/login");
-    return null;
+    return <div>Loading...</div>;
   }
 
   if (editing) {
