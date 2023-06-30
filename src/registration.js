@@ -31,6 +31,13 @@ const RegistrationForm = () => {
         .catch(error => {
             if (error.response && error.response.data && error.response.data.error) {
                 setError(error.response.data.error);
+            } else if (error.response.data) {
+                var errorMsg = Object.keys(error.response.data).reduce((accumulator, current) => {
+                    let newMsg = error.response.data[current][0]
+                    accumulator += ` "${current.toUpperCase()}" - ${newMsg} `
+                    return accumulator
+                }, '')
+                setError(errorMsg)
             } else {
                 setError('An error occurred during registration.');
             }
